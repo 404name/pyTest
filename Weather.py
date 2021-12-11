@@ -11,7 +11,20 @@ import urllib.error            # urllib error
 import requests
 import random
 
-
+user_agent_list = ["Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36",
+                        "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36",
+                        "Mozilla/5.0 (Windows NT 10.0; WOW64) Gecko/20100101 Firefox/61.0",
+                        "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36",
+                        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.62 Safari/537.36",
+                        "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36",
+                        "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)",
+                        "Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10.5; en-US; rv:1.9.2.15) Gecko/20110303 Firefox/3.6.15",
+                        ]
+headers = {'User-Agent': random.choice(user_agent_list)}
+myproxies = {
+    'http': 'http://220.181.111.37:80',
+    'https': 'http://220.181.111.37:80'
+}
 def main():
     yc_url = "http://www.weather.com.cn/weather1d/101200901.shtml"
     wh_url = "http://www.weather.com.cn/weather1d/101200101.shtml"
@@ -28,16 +41,7 @@ def main():
 
 
 def get_data(url):
-    user_agent_list = ["Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36",
-                        "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36",
-                        "Mozilla/5.0 (Windows NT 10.0; WOW64) Gecko/20100101 Firefox/61.0",
-                        "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36",
-                        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.62 Safari/537.36",
-                        "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36",
-                        "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)",
-                        "Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10.5; en-US; rv:1.9.2.15) Gecko/20110303 Firefox/3.6.15",
-                        ]
-    headers = {'User-Agent': random.choice(user_agent_list)}
+    
     req = urllib.request.Request(url, headers = headers)
     html = ""
     try:
@@ -58,6 +62,7 @@ def get_data(url):
     return weather
 
 
+
 def send_msg(msg1, msg2, qq):
     m = "早上好呀~" + '\n' + "现在是" + msg1[0] + ' ' + msg1[1] + '\n' + "今日天气：" + '\n' + "宜昌 " + msg1[2] + '\n' + "武汉 " + msg2[2]
     KEY = '49bdb9375842537a41ebc635a09229b2'
@@ -69,7 +74,8 @@ def send_msg(msg1, msg2, qq):
     url = 'https://qmsg.zendee.cn/send/' + KEY  # 私聊消息推送接口
 
     print(m);
-    response = requests.post(url, data = data)
+    headers = {'Content-Type': 'application/json;charset=utf-8'}
+    response = requests.post(url, data = data,headers=headers, timeout=None).content
     print(response)
     # response = requests.post(url2, data = data)
 
