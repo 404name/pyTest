@@ -10,7 +10,7 @@ import urllib.request          # 指定url，获取网页数据
 import urllib.error            # urllib error
 import requests
 import random
-
+import time
 user_agent_list = ["Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36",
                         "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36",
                         "Mozilla/5.0 (Windows NT 10.0; WOW64) Gecko/20100101 Firefox/61.0",
@@ -75,9 +75,20 @@ def send_msg(msg1, msg2, qq):
 
     print(m);
     # headers = {'Content-Type': 'application/json;charset=utf-8','Accept-Language':'zh-CN,zh;q=0.9'}
-    headers = {'User-Agent': random.choice(user_agent_list)}
-    response = requests.post(url, data = data,headers=headers, timeout=None).content
-    print(response)
+    for i in range(10):
+        try:
+            headers = {'User-Agent': random.choice(user_agent_list)}
+            response = requests.post(url, data = data,headers=headers, timeout=None).content
+            print(response)
+        except:
+            if i >= 9:
+                print('请求失败')
+            else:
+                time.sleep(0.5)
+        else:
+            time.sleep(0.1)
+            break
+    
     # response = requests.post(url2, data = data)
 
 def manage_str(str):
