@@ -20,7 +20,7 @@ user_agent_list = ["Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHT
                         "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)",
                         "Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10.5; en-US; rv:1.9.2.15) Gecko/20110303 Firefox/3.6.15",
                         ]
-headers = {'User-Agent': random.choice(user_agent_list)}
+
 myproxies = {
     'http': 'http://180.97.34.35:80',
     'https': 'http://180.97.34.35:80'
@@ -41,7 +41,7 @@ def main():
 
 
 def get_data(url):
-    
+    headers = {'User-Agent': random.choice(user_agent_list)}
     req = urllib.request.Request(url, headers = headers)
     html = ""
     try:
@@ -74,7 +74,8 @@ def send_msg(msg1, msg2, qq):
     url = 'https://qmsg.zendee.cn/send/' + KEY  # 私聊消息推送接口
 
     print(m);
-    headers = {'Content-Type': 'application/json;charset=utf-8'}
+    # headers = {'Content-Type': 'application/json;charset=utf-8','Accept-Language':'zh-CN,zh;q=0.9'}
+    headers = {'User-Agent': random.choice(user_agent_list)}
     response = requests.post(url, data = data,headers=headers, timeout=None).content
     print(response)
     # response = requests.post(url2, data = data)
