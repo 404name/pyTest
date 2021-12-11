@@ -76,6 +76,7 @@ def send_msg(msg1, msg2, qq):
     print(m);
     # headers = {'Content-Type': 'application/json;charset=utf-8','Accept-Language':'zh-CN,zh;q=0.9'}
     for i in range(10):
+        print('第'+ str(i) + '次尝试')
         try:
             headers = {'User-Agent': random.choice(user_agent_list)}
             response = requests.post(url, data = data,headers=headers, timeout=None).content
@@ -84,11 +85,14 @@ def send_msg(msg1, msg2, qq):
             if i >= 9:
                 print('请求失败')
             else:
+                
                 time.sleep(0.5)
         else:
             time.sleep(0.1)
             break
-    
+    headers = {'User-Agent': random.choice(user_agent_list)}
+    response = requests.post(url, data = data,headers=headers, timeout=None).content
+    print(response)
     # response = requests.post(url2, data = data)
 
 def manage_str(str):
