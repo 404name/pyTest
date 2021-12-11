@@ -75,7 +75,7 @@ def send_msg(msg1, msg2, qq):
 
     print(m);
     headers = {'Content-Type': 'application/json;charset=utf-8'}
-    response = requests.post(url, data = data,headers=headers, timeout=None,proxies=myproxies).content
+    response = requests.post(url, data = data,headers=headers, timeout=None).content
     print(response)
     # response = requests.post(url2, data = data)
 
