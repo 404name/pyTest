@@ -1,0 +1,41 @@
+# This workflow will upload a Python Package using Twine when a release is created
+# For more information see: https://help.github.com/en/actions/language-and-framework-guides/using-python-with-github-actions#publishing-to-package-registries
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Weather report action
+
+on:
+  push:
+  schedule:
+  # 定时任务，在每天的8点运行
+    - cron: '0 0 * * *'
+
+jobs:
+  bot:
+    runs-on: ubuntu-latest
+    steps:
+      # 首先copy git仓库到虚拟机上
+      - name: 'Checkout codes'
+        uses: actions/checkout@v1
+        
+      # 设置python环境
+      - name: 'Set up Python 3.7'
+        uses: actions/setup-python@v1
+        with: 
+          python-version: 3.7
+      
+      # 安装依赖
+      - name: 'Install requirements'
+        run: | 
+          python3 -m pip install --upgrade pip
+          python3 -m pip install --upgrade setuptools
+          pip install bs4
+          pip install requests
+          
+      # 运行脚本
+      - name: 'Run scripts'
+        run: python3 Weather.py
