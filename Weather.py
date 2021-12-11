@@ -22,8 +22,8 @@ user_agent_list = ["Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHT
                         ]
 headers = {'User-Agent': random.choice(user_agent_list)}
 myproxies = {
-    'http': 'http://220.181.111.37:80',
-    'https': 'http://220.181.111.37:80'
+    'http': 'http://180.97.34.35:80',
+    'https': 'http://180.97.34.35:80'
 }
 def main():
     yc_url = "http://www.weather.com.cn/weather1d/101200901.shtml"
@@ -75,7 +75,7 @@ def send_msg(msg1, msg2, qq):
 
     print(m);
     headers = {'Content-Type': 'application/json;charset=utf-8'}
-    response = requests.post(url, data = data,headers=headers, timeout=None).content
+    response = requests.post(url, data = data,headers=headers, timeout=None,proxies=myproxies).content
     print(response)
     # response = requests.post(url2, data = data)
 
